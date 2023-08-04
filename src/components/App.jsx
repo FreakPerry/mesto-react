@@ -52,6 +52,7 @@ function App() {
         name={'profile'}
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
+        buttonText={'Сохранить'}
       >
         <fieldset className="popup__form-fieldset">
           <input
@@ -81,6 +82,7 @@ function App() {
         name={'card'}
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        buttonText={'Добавить'}
       >
         <fieldset className="popup__form-fieldset">
           <input
@@ -103,7 +105,12 @@ function App() {
           <span className="error-message link-error"></span>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm title={'Вы уверены?'} name={'confirm'} onClose={closeAllPopups}>
+      <PopupWithForm
+        title={'Вы уверены?'}
+        name={'confirm'}
+        onClose={closeAllPopups}
+        buttonText={'Да'}
+      >
         <button type="submit" className="popup__save-button">
           Да
         </button>
@@ -113,6 +120,7 @@ function App() {
         name={'avatar'}
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        buttonText={'Подтвердить'}
       >
         <fieldset className="popup__form-fieldset">
           <input
