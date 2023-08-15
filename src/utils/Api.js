@@ -52,6 +52,11 @@ class Api {
     }).then(this._handleResponse);
   }
 
+  changeLikeCardStatus(obj, variable) {
+    this._status = variable ? this.like(obj._id) : this.dislike(obj._id);
+    return this._status;
+  }
+
   dislike(id) {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: 'DELETE',
