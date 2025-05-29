@@ -1,29 +1,25 @@
 import { useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
+import useFormAndValidation from '../hooks/useFormAndValidation.js';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleLinkChange(e) {
-    setLink(e.target.value);
-  }
+function AddPlacePopup({ isOpen, onClose, overlayClick, onAddPlace }) {
+  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation({
+    name: '',
+    link: ''
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlace({
-      name: name,
-      link: link
+      name: values.name,
+      link: values.link
     });
   }
 
   useEffect(() => {
-    setName('');
-    setLink('');
+    if (!isOpen) {
+      resetForm();
+    }
   }, [isOpen]);
 
   return (
@@ -32,8 +28,10 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name={'card'}
       isOpen={isOpen}
       onClose={onClose}
+      overlayClick={overlayClick}
       buttonText={'Добавить'}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <fieldset className="popup__form-fieldset">
         <input
@@ -44,20 +42,20 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           minLength="2"
           maxLength="30"
           required
-          value={name || ''}
-          onChange={handleNameChange}
+          value={values.name || ''}
+          onChange={handleChange}
         />
-        <span className="error-message name-error"></span>
+        <span className="error-message name-error">{errors.name}</span>
         <input
           type="url"
           className="popup__form-input"
           placeholder="Ссылка на картинку"
           name="link"
           required
-          value={link || ''}
-          onChange={handleLinkChange}
+          value={values.link || ''}
+          onChange={handleChange}
         />
-        <span className="error-message link-error"></span>
+        <span className={'error-message link-error'}>{errors.link}</span>
       </fieldset>
     </PopupWithForm>
   );

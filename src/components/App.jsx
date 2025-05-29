@@ -67,6 +67,12 @@ function App() {
     setIsImageOpen(false);
   };
 
+  const handleOverlayClick = e => {
+    if (e.target === e.currentTarget || e.key === 'Escape') {
+      closeAllPopups();
+    }
+  };
+
   const handleCardLike = async card => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     try {
@@ -134,17 +140,20 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          overlayClick={handleOverlayClick}
           onUpdateUser={handleUpdateUser}
         ></EditProfilePopup>
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          overlayClick={handleOverlayClick}
           onAddPlace={handleAddPlacesubmit}
         ></AddPlacePopup>
         <PopupWithForm
           title={'Вы уверены?'}
           name={'confirm'}
           onClose={closeAllPopups}
+          overlayClick={handleOverlayClick}
           buttonText={'Да'}
         >
           <button type="submit" className="popup__save-button">
@@ -154,9 +163,15 @@ function App() {
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          overlayClick={handleOverlayClick}
           onUpdateAvatar={handleUpdateAvatar}
         ></EditAvatarPopup>
-        <ImagePopup isOpen={isImageOpen} onClose={closeAllPopups} card={selectedCard} />
+        <ImagePopup
+          isOpen={isImageOpen}
+          onClose={closeAllPopups}
+          overlayClick={handleOverlayClick}
+          card={selectedCard}
+        />
       </CurrentUserContext.Provider>
     </div>
   );
